@@ -4,40 +4,32 @@ from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import PostForm
+from .utils import utils
 from .models import Group, Post, User
 
 
 def index(request):
     post_list = Post.objects.select_related('group')
-    paginator = Paginator(post_list, settings.NUMBER_POST)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
     template = 'posts/index.html'
-    context = {
-        'page_obj': page_obj,
-    }
+    context = utils(post_list, request)
     return render(request, template, context)
 
 
 def group_posts(request, slug):
     group = get_object_or_404(Group, slug=slug)
     posts = group.posts.select_related('group')
-    paginator = Paginator(posts, settings.NUMBER_POST)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
     template = 'posts/group_list.html'
-    context = {'group': group, 'page_obj': page_obj}
+    context = {'group': group, 'posts': posts}
+    context.update(utils(posts, request))
     return render(request, template, context)
 
 
 def profile(request, username):
     author = get_object_or_404(User, username=username)
     post_list = Post.objects.filter(author=author)
-    paginator = Paginator(post_list, settings.NUMBER_POST)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
     template = 'posts/profile.html'
-    context = {'page_obj': page_obj, 'author': author}
+    context = {'author': author}
+    context.update(utils(post_list, request))
     return render(request, template, context)
 
 
