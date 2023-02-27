@@ -46,7 +46,7 @@ def post_detail(request, post_id):
     posts_count = Post.objects.filter(author=post.author).count()
     template = 'posts/post_detail.html'
     context = {
-        'post': post, 'posts_count': posts_count, 'requser': request.user}
+        'post': post, 'posts_count': posts_count}
     return render(request, template, context)
 
 
