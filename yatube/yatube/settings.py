@@ -17,7 +17,7 @@ ALLOWED_HOSTS = []
 
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 
-EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails') 
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
 
 # Application definition
 
@@ -124,7 +124,7 @@ NUMBER_POST = 10
 
 LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'posts:index'
-# LOGOUT_REDIRECT_URL = 'posts:index'  
+# LOGOUT_REDIRECT_URL = 'posts:index'
 
 # Включение статических файлов в шаблон с помощью {% load static %}
 STATIC_URL = '/static/'
